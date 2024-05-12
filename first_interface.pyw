@@ -1,13 +1,25 @@
-from tkinter import *
+from tkinter import Tk, Label, Button
 
-main = Tk()
 
-main.title('Test window')
+def message():
+    print('Button message')
 
-main.iconbitmap('logo.ico')
 
-main.geometry('650x450')
+window = Tk()
 
-main.config(bg='red')
+window.title('Test window')
 
-main.mainloop()
+window.iconbitmap('logo.ico')
+
+window.geometry('650x450')
+
+lbl = Label(window, text='This is a Tkinter Label')
+lbl.pack()
+
+btn = Button(
+    window, text='Push this Button to show message', command=message)
+btn.config(bg='yellow')
+btn['fg'] = 'red'
+btn.pack()
+
+window.mainloop()
