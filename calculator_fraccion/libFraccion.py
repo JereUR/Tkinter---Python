@@ -1,4 +1,5 @@
 class Fraccion:
+
     def __init__(self, num=0, den=1):
         if isinstance(num, int):
             self.num = num
@@ -20,7 +21,7 @@ class Fraccion:
         x.simplifica()
         return x
 
-    def __div__(self, obj):
+    def __truediv__(self, obj):
         n = self.num * obj.den
         d = self.den * obj.num
         x = Fraccion(n, d)
@@ -28,15 +29,15 @@ class Fraccion:
         return x
 
     def __add__(self, obj):
-        n = self.num * obj.den
-        d = self.den * obj.num
+        n = self.num * obj.den + self.den * obj.num
+        d = self.den * obj.den
         x = Fraccion(n, d)
         x.simplifica()
         return x
 
     def __sub__(self, obj):
-        n = self.num * obj.den
-        d = self.den * obj.num
+        n = self.num * obj.den - self.den * obj.num
+        d = self.den * obj.den
         x = Fraccion(n, d)
         x.simplifica()
         return x
@@ -53,7 +54,6 @@ class Fraccion:
                 return a
             else:
                 return mcd(b, a % b)
-
         d = mcd(self.num, self.den)
         self.num = int(self.num/d)
         self.den = int(self.den/d)
