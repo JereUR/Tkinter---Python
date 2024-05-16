@@ -1,10 +1,17 @@
-from libFraaccion import Fraccion
+from libFraccion import Fraccion
+from libFracMix import FracMix
 
 
 def main():
-    a = Fraccion(3, 4)
-    b = Fraccion(7, 2)
+    a = FracMix(2, 3, 4)
+    b = FracMix(3, 1, 2)
+    c = FracMix(3, 1, 2)
     print(a+b)
+    print(a-b)
+    print(a*b)
+    print(a/b)
+    print(a == b)
+    print(c == b)
 
 
 if __name__ == '__main__':
