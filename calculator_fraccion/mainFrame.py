@@ -1,11 +1,12 @@
-from tkinter import Label, Button, Entry, Frame, messagebox
+from tkinter import Label, Button, Entry, Frame, messagebox, Text, Scrollbar, Radiobutton, IntVar
 from libFracMix import FracMix
 from tkinter.ttk import Combobox
 
 
 class MainFrame(Frame):
     def __init__(self, master=None):
-        super().__init__(master, width=320, height=170)
+        super().__init__(master, width=320, height=270)
+        self.var_op = IntVar()
         self.master = master
         self.pack()
         self.create_widgets()
@@ -23,7 +24,7 @@ class MainFrame(Frame):
 
         f2 = FracMix(e2, n2, d2)
 
-        if self.cmbOptions.get() == self.options[4]:
+        if self.var_op.get() == 4:
             if f1 == f2:
                 messagebox.showinfo(title='Fracciones mixtas',
                                     message='Las fracciones son iguales')
@@ -31,17 +32,16 @@ class MainFrame(Frame):
                 messagebox.showinfo(title='Fracciones mixtas',
                                     message='Las fracciones son diferentes')
         else:
-            if self.cmbOptions.get() == self.options[0]:
+            if self.var_op.get() == 0:
                 f3 = f1+f2
-            elif self.cmbOptions.get() == self.options[1]:
+            elif self.var_op.get() == 1:
                 f3 = f1-f2
-            elif self.cmbOptions.get() == self.options[2]:
+            elif self.var_op.get() == 2:
                 f3 = f1*f2
-            elif self.cmbOptions.get() == self.options[3]:
+            elif self.var_op.get() == 3:
                 f3 = f1/f2
 
-            self.txtRes.delete(0, 'end')
-            self.txtRes.insert(0, f3)
+            self.txtRes.insert(1.0, f3)
 
         pass
 
@@ -91,21 +91,42 @@ class MainFrame(Frame):
         Label(self, text='Fracción 1:').place(x=48, y=8)
         Label(self, text='Fracción 2:').place(x=198, y=8)
 
-        Label(self, text='Operación:').place(x=30, y=90)
-        Label(self, text='Resultado:').place(x=30, y=120)
+        Label(self, text='Resultado:').place(x=30, y=90)
+        p_aux = Frame(self)
+        p_aux.place(x=100, y=90)
 
-        self.txtRes = Entry(self, width=17)
-        self.txtRes.place(x=100, y=120)
+        scroll = Scrollbar(p_aux)
+        scroll.pack(side='right', fill='y')
+
+        self.txtRes = Text(p_aux, width=13, height=3,
+                           yscrollcommand=scroll.set)
+        self.txtRes.pack(side='left')
+
+        scroll.config(command=self.txtRes.yview)
+
+        Label(self, text='Operación:').place(x=30, y=150)
 
         self.btnCalcular = Button(
             self, text='Calcular', command=self.fCalcular)
-        self.btnCalcular.place(x=220, y=90)
+        self.btnCalcular.place(x=220, y=150)
 
         """ Combobox """
 
+        """
         self.options = ['Suma', 'Resta',
                         'Multiplicación', 'División', 'Son Iguales?']
         self.cmbOptions = Combobox(
             self, width='14', values=self.options, state='readonly')
-        self.cmbOptions.place(x=100, y=90)
-        self.cmbOptions.current(0)
+        self.cmbOptions.place(x=100, y=150)
+        self.cmbOptions.current(0) """
+
+        """Radiobutton"""
+
+        options = {'Suma': 0, 'Resta': 1,
+                   'Multiplicación': 2, 'División': 3, 'Son Iguales?': 4}
+        posy = 150
+
+        for (text, value) in options.items():
+            Radiobutton(self, text=text, variable=self.var_op,
+                        value=value).place(x=100, y=posy)
+            posy += 20
