@@ -10,7 +10,7 @@ class FracMix(Fraccion):
         super().simplifica()
 
     def __str__(self):
-        return str(self.ent) + super().__str__()
+        return str(self.ent) + super().__str__() + '\n'
 
     def simplifica(self):
         if self.num > self.den:
