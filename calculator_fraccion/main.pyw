@@ -1,17 +1,12 @@
-from libFraccion import Fraccion
-from libFracMix import FracMix
+from tkinter import Tk
+from mainFrame import MainFrame
 
 
 def main():
-    a = FracMix(2, 3, 4)
-    b = FracMix(3, 1, 2)
-    c = FracMix(3, 1, 2)
-    print(a+b)
-    print(a-b)
-    print(a*b)
-    print(a/b)
-    print(a == b)
-    print(c == b)
+    root = Tk()
+    root.wm_title('Fracciones Mixtas')
+    app = MainFrame(root)
+    app.mainloop()
 
 
 if __name__ == '__main__':
